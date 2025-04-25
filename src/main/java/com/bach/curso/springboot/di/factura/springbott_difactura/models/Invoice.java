@@ -3,10 +3,19 @@ package com.bach.curso.springboot.di.factura.springbott_difactura.models;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 @Component
+@RequestScope
+// @JsonIgnoreProperties({"targetSource", "advisors"})
 public class Invoice {
 
     @Autowired
@@ -16,7 +25,22 @@ public class Invoice {
     private String description;
 
     @Autowired
+    @Qualifier("default")
     private List<Item> items;
+
+    public Invoice() {
+    }
+
+    @PostConstruct
+    public void init(){
+        System.out.println("creando el componente de la factura");
+        client.setName(client.getName().concat("tahoma"));
+        description = description.concat("del cliente: ").concat(client.getName());
+    }
+    @PreDestroy
+    public void destroy(){
+        System.out.println("destruyendo el componente de la factura");
+    }
 
     public Client getClient() {
         return client;

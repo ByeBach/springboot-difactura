@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 
 import com.bach.curso.springboot.di.factura.springbott_difactura.models.Item;
@@ -24,8 +23,7 @@ public class AppConfig {
         return items;
     }
     
-    @Primary
-    @Bean 
+    @Bean("default") 
     List<Item> itemsInvoiceOffice(){
         Product p1 = new Product("word", 10);
         Product p2 = new Product("windows pro", 50);
